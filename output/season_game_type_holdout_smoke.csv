@@ -1,0 +1,2 @@
+valid_season,valid_game_type,train_rows,valid_rows,train_target_mean,valid_target_mean,valid_pred_mean,pred_minus_target,brier,logloss,seconds
+2019,F,1449306,25786,0.520821689829477,0.6892499806096332,0.5824827092345876,-0.1067672713750456,0.2288440533538628,0.6500747324306153,92.67

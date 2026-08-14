@@ -1,0 +1,39 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Local/editor/system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+
+# Large/raw competition data
+data/
+
+# Local model artifacts; submission zips preserve the selected artifact
+model/
+catboost_model/
+catboost_artifact_staging_*/
+*.pkl
+*.joblib
+
+# Heavy or temporary generated outputs
+output/model_comparison/oof_predictions.csv
+output/catboost_submission_check/clean_run/model/
+output/recent_form_smoke/
+output/recent_form_stage1/
+**/fold_metrics_partial.csv
+
+# Derived Trackman matching/feature tables are not used by the selected no-Trackman baseline
+output/trackman_features/
+output/trackman_matching/
