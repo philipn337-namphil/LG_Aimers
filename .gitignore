@@ -37,3 +37,6 @@ output/recent_form_stage1/
 # Derived Trackman matching/feature tables are not used by the selected no-Trackman baseline
 output/trackman_features/
 output/trackman_matching/
+
+# Local packaging scratch space
+catboost_hardened_staging_tmp/
