@@ -214,3 +214,56 @@ Conclusion:
 - CatBoost hyperparameter tuning alone appears saturated.
 - Do not create `submission-v3` from this experiment.
 - Next experiment should move to official as-of feature signal reconstruction, especially long-term vs recent pitcher/count/context signals.
+
+## V3 Official As-Of Signal Reconstruction Experiment
+
+Script:
+- `validate_v3_asof_signal_reconstruction.py`
+
+Output:
+- `output/v3_asof_signal_reconstruction/`
+
+Setup:
+- Only official provided `asof_*` columns were deterministically transformed.
+- No new target aggregates.
+- No validation/test target-derived rolling features.
+- No Trackman.
+- V2 CatBoost parameters and V2 calibration policy were kept fixed for family comparisons.
+
+Important source signals:
+- `asof_pitcher_success_rate`
+- `asof_pitcher_reverse_rate`
+- `asof_pitcher_prev1_game_success_rate`
+- `asof_pitcher_prev3_game_success_rate`
+- `asof_pitcher_prev5_game_success_rate`
+- `asof_batter_success_rate`
+- official pitcher pitchmix rates.
+
+Best V2-param feature family:
+- `A_C_skill_combo`
+  - recent-vs-career pitcher success deltas
+  - pitcher success/reverse/middle decomposition
+  - mean AUC: `0.520134`
+  - delta vs V2 mean AUC: `+0.000689`
+  - 2024 pseudo: `17.530`
+  - 2023 skill margin: `-0.000560`
+
+Tuned CatBoost one-shot with best family:
+- `A_C_skill_combo_tuned_catboost`
+  - mean AUC: `0.521047`
+  - 2024 pseudo: `18.111`
+  - 2023 skill margin: `-0.000573`
+
+Most 2023-helpful family:
+- `A_recent_vs_longterm`
+  - 2023 skill improvement vs V2: `+0.0000156`
+  - 2024 pseudo: `14.789`
+
+Conclusion:
+- Reconstructed official as-of features receive non-zero model importance.
+- Improvements are small and do not meet success thresholds:
+  - mean AUC did not reach `0.523`
+  - 2024 pseudo did not reach `25`
+  - 2023 skill improvement was too small to treat as a breakthrough.
+- Do not create `submission-v3` from this experiment.
+- Next step should evaluate OOF error diversity/ensemble only if combining V2, tuned CatBoost, and reconstructed-signal models can reduce fold-specific errors; otherwise revisit Trackman at pitch-context level.
