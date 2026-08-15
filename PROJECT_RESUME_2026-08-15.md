@@ -1,0 +1,170 @@
+# LG Aimers Resume Note - 2026-08-15
+
+## Git Baseline Already Saved
+
+- GitHub repo: `https://github.com/philipn337-namphil/LG_Aimers.git`
+- Branch: `main`
+- `submission-v1`: original CatBoost submission checkpoint
+  - commit: `c2e9d8b1354f5bb2e2cda4b2e308a337e4614f0a`
+- `submission-v1-hardened`: cwd-independent hardened artifact checkpoint
+  - commit: `85eb400046004604f02125471d375938b9bf3fc0`
+
+## Submission Artifacts
+
+- `catboost_submit.zip`
+  - Original CatBoost + Platt + global linear trend prior artifact.
+  - Do not modify.
+- `catboost_submit_hardened.zip`
+  - Added cwd-independent path handling.
+  - Submitted to DACON and failed with server error:
+    - `FileNotFoundError: [Errno 2] No such file or directory: '/app/model/model.pkl'`
+- `catboost_submit_daconfix.zip`
+  - New artifact created after server error.
+  - Zip member listing verified exactly:
+    - `script.py`
+    - `model_utils.py`
+    - `calibration_utils.py`
+    - `requirements.txt`
+    - `model/model.pkl`
+  - `model/model.pkl` exists in zip, size `598167`.
+  - model SHA256: `3048DC5D2AB0756BAC0408C52E3E0A2C0BDB1C1A3FAAF4B940004B971753960D`
+  - Local `/app`-style root and non-root cwd inference both passed.
+  - Prediction compared to `catboost_submit_hardened.zip` on 5-row test:
+    - `max_abs_diff = 0.0`
+  - Not committed yet.
+
+## DACON Public Result
+
+- `catboost_submit_daconfix.zip` submitted and code execution succeeded.
+- Public Score = `0`.
+- Official score:
+  - `Score = max(0, 100000 * (1 - Brier / (r*(1-r))))`
+- Interpretation:
+  - Public test Brier was at least as bad as constant mean-rate baseline.
+
+## Leaderboard Zero Diagnosis
+
+Script:
+- `diagnose_leaderboard_zero.py`
+
+Output:
+- `output/leaderboard_zero_diagnosis/`
+  - `variant_fold_metrics.csv`
+  - `pseudo_scores.csv`
+  - `yearly_global_rates.csv`
+  - `variant_summary.csv`
+
+Key validation rates:
+- 2022 actual rate: `0.528920`
+- 2023 actual rate: `0.499957`
+- 2024 actual rate: `0.486105`
+- 2024 constant-rate Brier: about `0.249807`
+
+2024 results:
+- CatBoost + trend `w=0.75`: Brier `0.249839`, pseudo score `0`
+- CatBoost + trend `w=0.50`: Brier `0.249868`, pseudo score `0`
+- CatBoost + trend `w=0.30`: Brier `0.249912`, pseudo score `0`
+- CatBoost + trend `w=0.10`: Brier `0.249975`, pseudo score `0`
+- CatBoost + Platt: Brier `0.250014`, pseudo score `0`
+- CatBoost raw: Brier `0.255516`, pseudo score `0`
+
+Conclusion:
+- Problem is not only trend prior weight.
+- Current row-level discrimination is not strong enough to reliably beat constant-rate baseline under DACON scoring.
+
+## Score-Positive Feature Experiment
+
+Script:
+- `validate_score_positive_features.py`
+
+Output:
+- `output/score_positive_features/`
+  - `feature_inventory.csv`
+  - `feature_set_fold_metrics.csv`
+  - `feature_set_summary.csv`
+  - `feature_importance.csv`
+  - `asof_feature_analysis.csv`
+
+Important correction:
+- Initial run accidentally added `rf_count_state_code` to baseline.
+- Script was corrected.
+- Final files in `output/score_positive_features/` were copied from corrected results.
+
+Findings:
+- Official as-of/history features are already used by current `FeatureBuilder`.
+- Strongest as-of target separation:
+  - `asof_pitcher_success_rate`: `+0.1216`
+  - `asof_pitcher_reverse_rate`: `-0.1145`
+  - `asof_pitcher_prev5_game_success_rate`: `+0.1112`
+  - `asof_pitcher_prev3_game_success_rate`: `+0.1094`
+- Best 2024 feature set was `count_interactions`, but still failed:
+  - 2024 Brier `0.249997`
+  - constant Brier `0.249807`
+  - skill margin `-0.000190`
+  - pseudo score `0`
+- No feature set achieved 2024 positive score.
+- Do not make a submission from these feature sets yet.
+
+## Holdout-Aware Calibration Experiment
+
+Script:
+- `validate_holdout_aware_calibration.py`
+
+Output:
+- `output/holdout_aware_calibration/`
+  - `rate_estimator_fold_metrics.csv`
+  - `rate_estimator_summary.csv`
+  - `mean_shift_metrics.csv`
+  - `damped_trend_grid.csv`
+  - `yearly_global_rates.csv`
+
+Setup:
+- Base prediction fixed to CatBoost + Platt.
+- No feature/model/hyperparameter changes.
+- Only global mean adjustment compared.
+- Validation actual rate was not used for mean matching.
+
+Best 2024 estimator:
+- `G_linear_trend_recent3 + probability_shift`
+- estimated 2024 rate: `0.487742`
+- actual 2024 rate: `0.486105`
+- rate error: `+0.001637`
+- Brier: `0.249824`
+- constant Brier: `0.249807`
+- skill margin: `-0.000017`
+- pseudo score: `0`
+
+Conclusion:
+- Even nearly correct global mean did not create positive 2024 score.
+- Calibration-only is not enough with current discrimination.
+
+## Current Untracked Work
+
+Current `git status` showed untracked:
+- `catboost_daconfix_staging_tmp/`
+- `catboost_submit_daconfix.zip`
+- `diagnose_leaderboard_zero.py`
+- `validate_score_positive_features.py`
+- `validate_holdout_aware_calibration.py`
+- `output/leaderboard_zero_diagnosis/`
+- `output/score_positive_features/`
+- `output/score_positive_features_baseline_fi/`
+- `output/score_positive_features_corrected/`
+- `output/holdout_aware_calibration/`
+
+Do not commit yet unless explicitly requested.
+
+## Recommended Next Step
+
+Next experiment should not be more global mean calibration. It should test whether controlled prediction-strength/shrinkage can beat constant baseline:
+
+- Base: CatBoost + Platt
+- Mean target: conservative `linear_trend_recent3`
+- Apply logit temperature scaling or shrink-to-mean:
+  - `p_adj = target_rate + lambda * (p_mean_matched - target_rate)`
+  - compare `lambda` values like `0.1, 0.2, 0.3, 0.5, 0.75, 1.0`
+- Primary success criterion:
+  - 2024 `skill_margin > 0`
+  - positive-score folds >= 2/3
+
+No submission zip should be created until a method produces positive 2024 pseudo score offline.

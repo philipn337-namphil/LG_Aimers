@@ -33,6 +33,7 @@ output/catboost_submission_check/clean_run/model/
 output/recent_form_smoke/
 output/recent_form_stage1/
 **/fold_metrics_partial.csv
+**/*_partial.csv
 
 # Derived Trackman matching/feature tables are not used by the selected no-Trackman baseline
 output/trackman_features/
@@ -40,3 +41,9 @@ output/trackman_matching/
 
 # Local packaging scratch space
 catboost_hardened_staging_tmp/
+catboost_daconfix_staging_tmp/
+catboost_submit_daconfix.zip
+
+# Duplicate intermediate score-positive experiment outputs
+output/score_positive_features_baseline_fi/
+output/score_positive_features_corrected/
