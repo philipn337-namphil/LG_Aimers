@@ -32,6 +32,18 @@
   - Prediction compared to `catboost_submit_hardened.zip` on 5-row test:
     - `max_abs_diff = 0.0`
   - Not committed yet.
+- `catboost_submit_v2.zip`
+  - Tag: `submission-v2`
+  - Commit: `5c5ad0dff61332ead008d81a10b5d4508af689f0`
+  - Submitted on 2026-08-15.
+  - Official leaderboard anchor from this point forward.
+  - Model/calibration:
+    - CatBoost + Platt
+    - `linear_trend_recent3` target-rate estimator
+    - logit intercept mean matching
+    - temperature `T=2.3`
+    - symmetric hard cap `+/-0.020`
+  - DACON Public Score: `96.253447238`
 
 ## DACON Public Result
 
@@ -168,3 +180,37 @@ Next experiment should not be more global mean calibration. It should test wheth
   - positive-score folds >= 2/3
 
 No submission zip should be created until a method produces positive 2024 pseudo score offline.
+
+## V3 CatBoost Tuning Experiment
+
+Script:
+- `validate_v3_catboost_tuning.py`
+
+Output:
+- `output/v3_catboost_tuning/`
+
+Setup:
+- FeatureBuilder and feature set unchanged.
+- CatBoost parameters only changed.
+- V2 calibration policy fixed for every candidate:
+  - Platt
+  - `linear_trend_recent3`
+  - logit intercept mean matching
+  - temperature `T=2.3`
+  - symmetric hard cap `+/-0.020`
+- No test prediction/distribution tuning.
+
+Result:
+- 35 total configurations.
+- Baseline V2 replay mean AUC: `0.519446`.
+- Best mean AUC: `0.520376`.
+- Best 2024 AUC: `0.511992`.
+- Best 2024 pseudo score: `18.300`, but 2023 skill margin worsened vs V2.
+- Most fold-stable variant: `random_strength=2.0`
+  - improves 2023 loss slightly
+  - but lowers 2024 pseudo vs V2.
+
+Conclusion:
+- CatBoost hyperparameter tuning alone appears saturated.
+- Do not create `submission-v3` from this experiment.
+- Next experiment should move to official as-of feature signal reconstruction, especially long-term vs recent pitcher/count/context signals.
