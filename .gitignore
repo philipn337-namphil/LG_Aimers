@@ -29,6 +29,8 @@ catboost_artifact_staging_*/
 
 # Heavy or temporary generated outputs
 output/model_comparison/oof_predictions.csv
+output/v3_ensemble/oof_predictions.csv
+output/v3_ensemble/calibration_oof_predictions.csv
 output/catboost_submission_check/clean_run/model/
 output/recent_form_smoke/
 output/recent_form_stage1/

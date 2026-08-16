@@ -1,0 +1,5 @@
+model_id,source_candidate,families,selection_role
+A_v2_base,BASE,,V2 baseline model
+B_tuned_base,BASE,,V3 tuned CatBoost on V2 features
+C_stable_reconstructed_A_recent_vs_longterm_v2_params,A_recent_vs_longterm,A,Best fold-stable reconstructed candidate
+D_high_discrimination_A_C_skill_combo_tuned_catboost_tuned_params,A_C_skill_combo_tuned_catboost,AC,Highest discrimination reconstructed candidate

@@ -84,6 +84,69 @@ Conclusion:
 - Problem is not only trend prior weight.
 - Current row-level discrimination is not strong enough to reliably beat constant-rate baseline under DACON scoring.
 
+## V3 Ensemble Validation - 2026-08-16
+
+Script:
+- `validate_v3_ensemble.py`
+
+Output:
+- `output/v3_ensemble/`
+  - `selected_previous_candidates.csv`
+  - `model_specs.csv`
+  - `model_pair_diversity.csv`
+  - `error_diversity.csv`
+  - `ensemble_grid.csv`
+  - `fold_metrics.csv`
+  - `ensemble_summary.csv`
+  - `year2023_analysis.csv`
+  - `verdict.csv`
+
+Large local-only files, intentionally not committed:
+- `output/v3_ensemble/oof_predictions.csv`
+- `output/v3_ensemble/calibration_oof_predictions.csv`
+
+Previous as-of reconstruction status:
+- `previous_signal_reconstruction_success_count = 0`
+- No candidate met the prior `success_flag`.
+
+Actual previous best candidates used:
+- Fold-stable reconstructed: `A_recent_vs_longterm`, `v2_params`, families `A`
+- Highest discrimination reconstructed: `A_C_skill_combo_tuned_catboost`, `tuned_params`, families `AC`
+- Best 2023 skill-margin reconstructed: `A_recent_vs_longterm`, same as fold-stable candidate
+
+Compared models:
+- `A_v2_base`: V2 CatBoost params + V2 feature set
+- `B_tuned_base`: tuned CatBoost params + V2 feature set
+- `C_stable_reconstructed_A_recent_vs_longterm_v2_params`
+- `D_high_discrimination_A_C_skill_combo_tuned_catboost_tuned_params`
+
+Key results:
+- Most diverse prediction pair vs V2: `A_v2_base` vs `C_stable_reconstructed_A_recent_vs_longterm_v2_params`
+  - Pearson correlation `0.9908975`
+  - Spearman correlation `0.9887960`
+  - mean abs prediction difference `0.0063212`
+- Lowest squared-error correlation pair: `A_v2_base` vs `C_stable_reconstructed_A_recent_vs_longterm_v2_params`
+  - squared-error correlation `0.9967285`
+- Best mean AUC candidate was the single reconstructed tuned model:
+  - `D_high_discrimination_A_C_skill_combo_tuned_catboost_tuned_params`
+  - mean AUC `0.5210465`
+  - 2022 pseudo `122.4409`
+  - 2023 pseudo `0`
+  - 2024 pseudo `18.1113`
+  - 2023 skill margin `-0.0005734`
+  - mean Brier improvement vs V2 `-0.00002966`
+- Best 2023 skill-margin reconstructed model:
+  - `C_stable_reconstructed_A_recent_vs_longterm_v2_params`
+  - 2023 skill margin `-0.0005524`
+  - delta vs V2 2023 skill `+0.0000156`
+  - 2024 pseudo only `14.7889`
+- No 2-model or limited 3-model blend satisfied V3 selection criteria.
+
+Verdict:
+- `NO ENSEMBLE VALUE`
+- Do not create `submission-v3` from this ensemble result.
+- Next recommended direction: Trackman second-stage feature engineering.
+
 ## Score-Positive Feature Experiment
 
 Script:

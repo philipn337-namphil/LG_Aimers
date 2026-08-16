@@ -1,0 +1,5 @@
+role,candidate_name,model_label,families,mean_auc,pseudo_2022,pseudo_2023,pseudo_2024,skill_2023,success_flag
+previous_base_anchor,BASE,v2_params,,0.519445638243487,89.51967299044315,0.0,13.181772461585556,-0.0005680301798841,False
+Best fold-stable reconstructed candidate,A_recent_vs_longterm,v2_params,A,0.5197531934362689,93.84484398826972,0.0,14.78889340707605,-0.0005524051571814,False
+Highest discrimination reconstructed candidate,A_C_skill_combo_tuned_catboost,tuned_params,AC,0.5210465360723192,122.44085192078369,0.0,18.11131443306706,-0.0005734039164422,False
+Best 2023 skill-margin reconstructed candidate,A_recent_vs_longterm,v2_params,A,0.5197531934362689,93.84484398826972,0.0,14.78889340707605,-0.0005524051571814,False
