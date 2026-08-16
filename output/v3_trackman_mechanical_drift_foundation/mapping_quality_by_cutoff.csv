@@ -1,0 +1,5 @@
+cutoff_year,prediction_pitcher_population,population_pitcher_count,matched_pitcher_count,unmatched_pitcher_count,mapping_coverage,ambiguous_mapping_count,min_score,median_score,uses_target,uses_future_participation
+2022,season validation pitchers,390,86,304,0.2205128205128205,120,0.934217599995613,0.9919009207075333,False,False
+2023,season validation pitchers,382,110,272,0.2879581151832461,145,0.9303817035759745,0.9896165575785155,False,False
+2024,season validation pitchers,391,131,260,0.3350383631713555,157,0.9327362444310525,0.9878847920259639,False,False
+2025,all train pitchers; hidden test pitchers unknown,792,313,479,0.3952020202020202,161,0.930294785917692,0.985925925925926,False,False

@@ -247,6 +247,59 @@ Verdict:
 - `LOCATION COMMAND APPROACH NOT SAFE`
 - Next safe direction is not plate-location command; use only strict prior-history non-location Trackman proxies such as release consistency or historical pitch-mix summaries.
 
+## Trackman Mechanical Drift Foundation - 2026-08-16
+
+Script:
+- `build_trackman_mechanical_drift_foundation.py`
+
+Output:
+- `output/v3_trackman_mechanical_drift_foundation/`
+  - `trackman_physical_quality.csv`
+  - `trackman_physical_quality_by_year.csv`
+  - `yearly_measurement_stats.csv`
+  - `yearly_measurement_shifts.csv`
+  - `pitcher_history_coverage.csv`
+  - `pitcher_cutoff_coverage.csv`
+  - `mapping_quality_by_cutoff.csv`
+  - `pitch_mix_shift_analysis.csv`
+  - `outlier_policy_comparison.csv`
+  - `time_resolution_comparison.csv`
+  - `drift_feature_inventory.csv`
+  - `drift_feature_stats.csv`
+  - `drift_extreme_cases.csv`
+  - `leakage_assertion_results.csv`
+  - `foundation_summary.csv`
+
+Local-only generated tables:
+- `output/v3_trackman_mechanical_drift_foundation/mechanical_drift_foundation_by_cutoff.csv`
+- `output/v3_trackman_mechanical_drift_foundation/pitcher_season_pitch_type_summary.csv`
+
+Key findings:
+- Physical columns audited: `rel_height`, `rel_side`, `extension`, `rel_speed`, `spin_rate`, `induced_vert_break`, `horz_break`.
+- Largest league-wide yearly mean shift: `2020->2021 spin_rate`, shift `12.864698`.
+- One regime-shift flag: `2021->2022 induced_vert_break`, because paired pitchers mostly moved negative.
+- Trackman history coverage is sufficient for a foundation:
+  - cutoff 2022: `632` prior-history pitchers, `557` with at least 100 pitches
+  - cutoff 2023: `727` prior-history pitchers, `650` with at least 100 pitches
+  - cutoff 2024: `804` prior-history pitchers, `715` with at least 100 pitches
+  - cutoff 2025: `906` prior-history pitchers, `800` with at least 100 pitches
+- Cutoff-safe mapping coverage remains limited:
+  - 2022 validation population: `86/390`
+  - 2023 validation population: `110/382`
+  - 2024 validation population: `131/391`
+  - 2025 train-reference population: `313/792`
+- Pitch-type adjusted drift foundation was generated; pitch-mix confounding is at least moderate and high for `2023->2024 horz_break`.
+- Recommended outlier policy: future feature generation should use global 1%-99% winsorization plus MAD flag audit columns; raw data remains unchanged.
+- Recommended first modeling resolution: season-level drift, with recent 1 season primary and recent 2 seasons as stability companion.
+
+Leakage assertions:
+- `source_max_date` and `source_max_season` passed for cutoffs 2022, 2023, 2024, 2025.
+- Script does not read `control_success`, predictions, or train CatBoost.
+
+Verdict:
+- `MECHANICAL DRIFT FOUNDATION READY`
+- Next step: add only the most reliable strict prior-history drift family to V2 CatBoost in temporal ablation validation.
+
 ## Score-Positive Feature Experiment
 
 Script:

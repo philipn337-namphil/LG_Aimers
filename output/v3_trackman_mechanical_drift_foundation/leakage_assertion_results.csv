@@ -1,0 +1,13 @@
+check_name,status,observed_max_source_season,allowed_max_source_season,details,observed_max_source_date,allowed_max_source_date
+source_season_cutoff_2022,PASS,2021.0,2021.0,prior-season-only source policy,,
+source_max_date_cutoff_2022,PASS,,,source_max_date <= prediction year start minus one day,2021-11-18,2021-12-31
+source_season_cutoff_2023,PASS,2022.0,2022.0,prior-season-only source policy,,
+source_max_date_cutoff_2023,PASS,,,source_max_date <= prediction year start minus one day,2022-11-08,2022-12-31
+source_season_cutoff_2024,PASS,2023.0,2023.0,prior-season-only source policy,,
+source_max_date_cutoff_2024,PASS,,,source_max_date <= prediction year start minus one day,2023-11-13,2023-12-31
+source_season_cutoff_2025,PASS,2024.0,2024.0,prior-season-only source policy,,
+source_max_date_cutoff_2025,PASS,,,source_max_date <= prediction year start minus one day,2024-10-17,2024-12-31
+target_used,PASS,,,"script does not read target column, predictions, or train models",,
+control_success_used,PASS,,,"script does not read target column, predictions, or train models",,
+validation_prediction_used,PASS,,,"script does not read target column, predictions, or train models",,
+catboost_training_used,PASS,,,"script does not read target column, predictions, or train models",,

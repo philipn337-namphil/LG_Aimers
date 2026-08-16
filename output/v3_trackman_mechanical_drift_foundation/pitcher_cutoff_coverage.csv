@@ -1,0 +1,5 @@
+cutoff_year,source_policy,pitcher_count,pitchers_ge_20_pitches,pitchers_ge_50_pitches,pitchers_ge_100_pitches,pitchers_ge_300_pitches,pitchers_ge_3_games,pitchers_ge_5_games,pitchers_ge_10_games
+2022,season < 2022,632,613,583,557,462,579,544,480
+2023,season < 2023,727,709,677,650,551,668,638,569
+2024,season < 2024,804,786,746,715,618,735,705,637
+2025,season <= 2024,906,882,837,800,701,821,791,713
