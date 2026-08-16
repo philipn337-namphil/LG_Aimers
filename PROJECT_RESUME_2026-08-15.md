@@ -747,3 +747,61 @@ Conclusion:
 - Success criteria are met by mean AUC, 2024 pseudo, 2023 skill recovery, and 3/3 skill-margin improvement for the best fixed-strength candidates.
 - Final verdict: `HIERARCHICAL SIGNAL FOUND`.
 - Next step should robustness-check the best hierarchy candidates as V3 submission candidates, especially `C_PITCHER_GAME` and `D_PITCHER_BATTER_HAND`, before creating any submission artifact.
+
+## V3 Hierarchical Robustness / Low-Sample Fallback Experiment
+
+Script:
+- `validate_v3_hierarchical_robustness.py`
+
+Output:
+- `output/v3_hierarchical_robustness/`
+
+Setup:
+- V2 feature set unchanged.
+- No Trackman, no new raw features, no CatBoost tuning.
+- Robustness checks were limited to the previously validated hierarchy family:
+  - `C_PITCHER_GAME`
+  - `D_PITCHER_BATTER_HAND`
+  - deterministic hard low-sample fallback to V2
+  - soft reliability blend with V2
+  - C/D logit context combination
+  - recent-history and fixed recency-weighted history variants
+- Calibration was fixed to calibration-year Platt plus V2 strength control.
+- No submission artifact or `submission-v3` tag was created.
+
+Reproduction:
+- V2 replay:
+  - mean AUC: `0.519446`
+  - 2022 pseudo: `89.520`
+  - 2023 skill: `-0.000568`
+  - 2024 pseudo: `13.182`
+- C/D baseline reproduction matched the previous hierarchical experiment:
+  - `C_PITCHER_GAME_ap100_ac300`: mean AUC `0.529827`, 2023 skill `-0.000380`, 2024 pseudo `50.045`
+  - `D_PITCHER_BATTER_HAND_ap100_ac300`: mean AUC `0.528738`, 2023 skill `-0.000327`, 2024 pseudo `94.459`
+
+Robustness:
+- Smoothing plateau exists:
+  - all `18/18` C/D grid combinations across `alpha_pitcher in {50,100,200}` and `alpha_context in {150,300,600}` met the robustness criteria.
+- Hard fallback improves both C and D:
+  - `C_PITCHER_GAME_fallback100`: mean AUC `0.531231`, 2023 skill `-0.000397`, 2024 pseudo `53.906`
+  - `D_PITCHER_BATTER_HAND_fallback100`: mean AUC `0.530289`, 2023 skill `-0.000338`, 2024 pseudo `99.742`
+- Soft reliability blend is strongest overall:
+  - `C_PITCHER_GAME_probblend100`: mean AUC `0.531413`, 2023 skill `-0.000398`, 2024 pseudo `52.823`
+  - `D_PITCHER_BATTER_HAND_probblend300`: mean AUC `0.530871`, 2023 skill `-0.000347`, 2024 pseudo `97.511`
+- Best C/D logit combination:
+  - `CD_COMBO_g0p50_h0p50`: mean AUC `0.529047`, 2023 skill `-0.000369`, 2024 pseudo `89.921`
+  - C/D combination is stable but does not beat the best soft C or D variants.
+- Recency weighting:
+  - `D_PITCHER_BATTER_HAND_recency_weighted` improves 2023 skill to `-0.000300` and 2024 pseudo to `110.851`, at lower mean AUC `0.530131`.
+
+Bootstrap:
+- Top C soft-blend variants beat V2 in every row bootstrap and pitcher-cluster bootstrap fold:
+  - `P(candidate beats V2) = 1.00` for 2022, 2023, and 2024.
+- Improvement is not solely one pitcher, but it is concentrated:
+  - top 1% pitchers explain about `27-28%` of total gain.
+  - top 5% explain about `68-69%`.
+
+Conclusion:
+- Hierarchical signal is reproducible across smoothing, low-sample fallback, reliability blending, and bootstrap.
+- Final verdict: `READY FOR V3 ARTIFACT`.
+- Next step should create the V3 artifact from the conservative soft-blend hierarchy only after one final artifact-build dry run; do not add new feature families before that.
