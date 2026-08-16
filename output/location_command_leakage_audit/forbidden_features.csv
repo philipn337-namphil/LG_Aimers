@@ -1,0 +1,16 @@
+forbidden_feature,reason
+current_row_plate_x,current pitch post-outcome/location information is unavailable at inference and leaks target
+current_row_plate_z,current pitch post-outcome/location information is unavailable at inference and leaks target
+current_row_zone,current pitch post-outcome/location information is unavailable at inference and leaks target
+current_row_pitch_result,current pitch post-outcome/location information is unavailable at inference and leaks target
+current_row_pitch_outcome,current pitch post-outcome/location information is unavailable at inference and leaks target
+current_row_control_success,current pitch post-outcome/location information is unavailable at inference and leaks target
+current_row_tagged_pitch_type,actual current pitch type is explicitly not provided in train/test input and is post-decision information
+current_row_auto_pitch_type,actual current pitch type is explicitly not provided in train/test input and is post-decision information
+current_row_pitch_type_group,actual current pitch type is explicitly not provided in train/test input and is post-decision information
+validation_year_full_trackman_aggregate,includes later validation-year games/pitches
+same_game_full_trackman_aggregate,includes future pitches from the same game
+post_game_aggregate_for_current_pitch,includes pitches after the current row
+test_set_aggregate,uses hidden evaluation rows against rules
+target_based_trackman_mapping,mapping may not use control_success pattern or predictions
+future_season_mapping_counts_for_validation,mapping code currently uses 2019-2024 count vectors; offline validation should rebuild mapping with prior seasons only

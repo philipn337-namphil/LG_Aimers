@@ -1,0 +1,2 @@
+mapping_component,uses_target,uses_predictions,uses_future_counts_for_offline_validation,safe_for_2025_test,offline_validation_policy,reason
+match_trackman_players.py,False,False,True,CONDITIONALLY_SAFE,"Rebuild mapping with only seasons < validation_year, or freeze mapping as external metadata and do not tune decisions on validation target.","Current matcher uses hand plus 2019-2024 pitch-count vectors. This is not target leakage, but for 2022/2023/2024 validation it can use future participation patterns."

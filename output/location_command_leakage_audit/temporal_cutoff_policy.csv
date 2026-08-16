@@ -1,0 +1,5 @@
+prediction_context,prediction_rows,allowed_trackman_history,max_allowed_source_season,strict_policy,forbidden_policy,same_season_full_aggregate_allowed,same_game_asof_required_if_same_season_used
+validation_2022,train rows with season == 2022,Trackman rows with season < 2022,2021,prior-season-only for offline validation,using any Trackman row with season >= 2022,False,True
+validation_2023,train rows with season == 2023,Trackman rows with season < 2023,2022,prior-season-only for offline validation,using any Trackman row with season >= 2023,False,True
+validation_2024,train rows with season == 2024,Trackman rows with season < 2024,2023,prior-season-only for offline validation,using any Trackman row with season >= 2024,False,True
+test_2025,official hidden 2025 test rows,provided Trackman rows with season <= 2024,2024,all provided 2019-2024 Trackman history is prior to 2025,"2025 Trackman, test-set aggregate, hidden test row interactions",False,True

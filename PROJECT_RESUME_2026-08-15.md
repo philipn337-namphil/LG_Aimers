@@ -207,6 +207,46 @@ Tags preserved:
 - `submission-v1-hardened`
 - `submission-v2`
 
+## Trackman Location-Command Leakage Audit - 2026-08-16
+
+Script:
+- `audit_trackman_location_command_leakage.py`
+
+Output:
+- `output/location_command_leakage_audit/`
+  - `trackman_location_column_inventory.csv`
+  - `feature_leakage_classification.csv`
+  - `temporal_cutoff_policy.csv`
+  - `command_profile_leakage_audit.csv`
+  - `safe_feature_recipe.csv`
+  - `forbidden_features.csv`
+  - `leakage_assertion_results.csv`
+  - `mapping_leakage_audit.csv`
+  - `verdict.csv`
+
+Key findings:
+- Provided `trackman_history.csv` has no `plate_x`, `plate_z`, `zone`, catcher target, pitch result, or pitch outcome columns.
+- Train/test rows do not include current actual pitch type.
+- Current-row location, current-row zone/result, current-row outcome, current-row pitch type, and `control_success` are forbidden for inference features.
+- Pitcher historical plate-location command profiles are not implementable from the provided Trackman schema.
+- Historical release/movement or pitch-mix aggregates are only conditionally safe under strict prior-history aggregation.
+
+Temporal policy:
+- validation 2022: Trackman source season `< 2022`
+- validation 2023: Trackman source season `< 2023`
+- validation 2024: Trackman source season `< 2024`
+- test 2025: provided Trackman source season `<= 2024`
+- Full validation-season or full-game aggregates are leakage.
+
+Mapping audit:
+- Existing Trackman matching uses hand plus 2019-2024 count vectors.
+- It does not use `control_success` or predictions.
+- For offline validation it can leak future participation/count patterns unless rebuilt with source seasons strictly before each validation year.
+
+Verdict:
+- `LOCATION COMMAND APPROACH NOT SAFE`
+- Next safe direction is not plate-location command; use only strict prior-history non-location Trackman proxies such as release consistency or historical pitch-mix summaries.
+
 ## Score-Positive Feature Experiment
 
 Script:

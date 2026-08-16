@@ -1,0 +1,2 @@
+verdict,reason,no_model_training,no_submission_artifact
+LOCATION COMMAND APPROACH NOT SAFE,"Provided Trackman has no plate_x/plate_z/zone/result/outcome columns, and current actual pitch_type is absent from train/test. Only non-location historical release/movement aggregates are conditionally safe with strict prior-history aggregation.",True,True

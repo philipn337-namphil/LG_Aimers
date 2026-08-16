@@ -1,0 +1,10 @@
+check_name,invariant,status,observed_value,details
+prior_history_cutoff_validation_2022,max(source season) < 2022,PASS,2021,prior rows=836115
+full_season_would_leak_validation_2022,no source season >= 2022,EXPECTED_FAIL_UNSAFE_POLICY,2022,same/future rows that must be excluded=956963
+prior_history_cutoff_validation_2023,max(source season) < 2023,PASS,2022,prior rows=1143752
+full_season_would_leak_validation_2023,no source season >= 2023,EXPECTED_FAIL_UNSAFE_POLICY,2023,same/future rows that must be excluded=649326
+prior_history_cutoff_validation_2024,max(source season) < 2024,PASS,2023,prior rows=1458852
+full_season_would_leak_validation_2024,no source season >= 2024,EXPECTED_FAIL_UNSAFE_POLICY,2024,same/future rows that must be excluded=334226
+test_2025_trackman_cutoff,max(source season) <= 2024,PASS,2024,rows=1793078
+trackman_current_location_columns_absent,plate_x/plate_z/zone/result/outcome columns absent from provided Trackman,PASS,absent,Confirms current-row location cannot be accidentally merged from this dataset schema.
+same_game_order_keys_available,"game_date, trackman_game_id and pitch_no are available for strict as-of ordering if same-season aggregation is ever attempted",PASS,duplicated_game_pitch_no=2,Prior-season-only policy avoids same-game leakage; strict as-of would need tie handling because pitch_no may not be globally unique.

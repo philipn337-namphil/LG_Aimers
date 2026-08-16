@@ -1,0 +1,16 @@
+candidate_id,candidate_feature,classification,reason,current_pitch_type_available_in_test,plate_location_columns_available
+A,pitcher historical plate_x mean/std,LEAKAGE / NOT ALLOWED,plate_x is absent; current-row actual plate location would be post-pitch and forbidden.,False,False
+B,pitcher historical plate_z mean/std,LEAKAGE / NOT ALLOWED,plate_z is absent; current-row actual plate location would be post-pitch and forbidden.,False,False
+C,pitcher x pitch_type plate_x/z mean/std,LEAKAGE / NOT ALLOWED,plate_x/z are absent and current row actual pitch_type is not provided in test.,False,False
+D,pitcher historical location entropy,LEAKAGE / NOT ALLOWED,location coordinate/bin columns are absent.,False,False
+E,pitcher x pitch_type location entropy,LEAKAGE / NOT ALLOWED,location columns are absent and current pitch_type is unavailable at inference.,False,False
+F,historical zone-hit rate,LEAKAGE / NOT ALLOWED,zone/result columns are absent; current-row zone/result would directly overlap target construction risk.,False,False
+G,historical edge-zone density,LEAKAGE / NOT ALLOWED,edge/zone geometry columns are absent.,False,False
+H,historical cluster compactness,LEAKAGE / NOT ALLOWED,"requires plate_x/plate_z or equivalent location coordinates, which are absent.",False,False
+I,release-to-location sensitivity,LEAKAGE / NOT ALLOWED,"release columns exist, but plate-location response columns are absent.",False,False
+J,historical command-zone density,LEAKAGE / NOT ALLOWED,command/zone columns are absent.,False,False
+K,current-row plate_x/z,LEAKAGE / NOT ALLOWED,current pitch actual location is not known at test inference and is explicitly forbidden by data rules.,False,False
+L,current-row zone/result,LEAKAGE / NOT ALLOWED,current pitch zone/result are post-pitch outcomes and not present in test input.,False,False
+M,current-row actual pitch outcome,LEAKAGE / NOT ALLOWED,current outcome is target leakage.,False,False
+N,pitcher historical release/movement aggregate,CONDITIONALLY SAFE,Not a location-command feature; allowed only with prior-history cutoff and no validation/test future rows.,False,False
+O,pitcher x historical pitch_type release/movement aggregate,CONDITIONALLY SAFE,"Historical actual pitch_type can group prior Trackman rows, but current row pitch_type cannot be used as a key.",False,False

@@ -1,0 +1,33 @@
+column_name,dtype,meaning,known_before_pitch,known_only_after_pitch,target_or_control_success_related,audit_note,exists_in_trackman
+auto_pitch_type,object,Historical automatically classified pitch type.,False,True,True,historical post-pitch measurement: allowed only after strict prior-history aggregation,True
+balls_before,int64,Ball count before the historical pitch.,True,False,False,historical pre-pitch metadata,True
+batter_hand,object,Batter handedness.,True,False,False,historical pre-pitch metadata,True
+batter_team,object,Batter team code.,True,False,False,historical pre-pitch metadata,True
+batter_trackman_id,int64,Trackman batter identifier.,True,False,False,historical pre-pitch metadata,True
+game_date,object,Date of the historical Trackman game.,True,False,False,historical pre-pitch metadata,True
+game_dayofweek,int64,Day of week of the historical Trackman game.,True,False,False,historical pre-pitch metadata,True
+game_month,int64,Month of the historical Trackman game.,True,False,False,historical pre-pitch metadata,True
+inning,int64,Inning of the historical Trackman pitch.,True,False,False,historical pre-pitch metadata,True
+pitch_no,int64,Pitch order number inside Trackman game.,True,False,False,historical pre-pitch metadata,True
+pitch_type_group,object,Historical actual pitch type group.,False,True,True,historical post-pitch measurement: allowed only after strict prior-history aggregation,True
+pitcher_hand,object,Pitcher handedness.,True,False,False,historical pre-pitch metadata,True
+pitcher_team,object,Pitcher team code.,True,False,False,historical pre-pitch metadata,True
+pitcher_trackman_id,int64,Trackman pitcher identifier.,True,False,False,historical pre-pitch metadata,True
+rel_height,float64,Historical release height measurement.,False,True,False,historical post-pitch measurement: allowed only after strict prior-history aggregation,True
+rel_side,float64,Historical release side measurement.,False,True,False,historical post-pitch measurement: allowed only after strict prior-history aggregation,True
+rel_speed,float64,Historical release speed measurement.,False,True,False,historical post-pitch measurement: allowed only after strict prior-history aggregation,True
+season,int64,Season of the historical Trackman pitch.,True,False,False,historical pre-pitch metadata,True
+strikes_before,int64,Strike count before the historical pitch.,True,False,False,historical pre-pitch metadata,True
+tagged_pitch_type,object,Historical actual pitch type label.,False,True,True,historical post-pitch measurement: allowed only after strict prior-history aggregation,True
+top_bottom,object,Top/bottom half of inning.,True,False,False,historical pre-pitch metadata,True
+trackman_game_id,object,Trackman historical game identifier.,True,False,False,historical pre-pitch metadata,True
+zone_speed,float64,"Historical speed near home plate, not a zone/location coordinate.",False,True,True,historical post-pitch measurement: allowed only after strict prior-history aggregation,True
+catcher_target_x,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+catcher_target_z,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+pitch_outcome,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+pitch_result,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+plate_x,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+plate_z,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+strike_zone_bottom,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+strike_zone_top,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
+zone,ABSENT,Requested location/zone/result field is not present in provided Trackman data.,False,True,True,absent; cannot be used for feature construction,False
