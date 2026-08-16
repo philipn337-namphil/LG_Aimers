@@ -641,3 +641,44 @@ Conclusion:
   - 2023 skill improvement was too small to treat as a breakthrough.
 - Do not create `submission-v3` from this experiment.
 - Next step should evaluate OOF error diversity/ensemble only if combining V2, tuned CatBoost, and reconstructed-signal models can reduce fold-specific errors; otherwise revisit Trackman at pitch-context level.
+
+## V3 Ranking-Aware Modeling Experiment
+
+Script:
+- `validate_v3_ranking_aware.py`
+
+Output:
+- `output/v3_ranking_aware/`
+
+Setup:
+- V2 feature set unchanged.
+- No Trackman, no new raw features, no test prediction/distribution tuning.
+- V2 CatBoost classifier replayed as `A_CLASSIFIER`.
+- CatBoost ranker tested with `QueryRMSE` and temporal score calibration:
+  - `pitcher_id + game_type`
+  - `pitcher_id + count_state`
+  - `pitcher_id + game_type + count_state`
+- `PairLogit` was checked for feasibility first, but pair generation was computationally impractical for this table size; the executed ranking objective used group-aware `QueryRMSE`.
+- Calibration used calibration-year Platt mapping followed by fixed V2 strength control. No T/cap retuning.
+
+V2 replay:
+- mean AUC: `0.519446`
+- 2022 pseudo: `89.520`
+- 2023 skill margin: `-0.000568`
+- 2024 pseudo: `13.182`
+
+Best ranking candidate by mean AUC:
+- `C_QUERYRMSE_PITCHER_COUNT`
+  - group: `pitcher_id + count_state`
+  - mean AUC: `0.515479`
+  - delta mean AUC vs V2: `-0.003967`
+  - 2022 pseudo: `152.852`
+  - 2023 skill margin: `-0.000701`
+  - 2024 pseudo: `0.000`
+  - V2 prediction correlation: `0.9060` overall
+
+Conclusion:
+- Ranking probabilities were more diverse than V2 but did not improve discrimination or competition score.
+- 2023 pairwise accuracy moved only marginally while AUC and skill margin worsened.
+- Final verdict: `RANKING OBJECTIVE NOT USEFUL`.
+- Next step should move to a hierarchical formulation rather than another direct tabular objective variant.
