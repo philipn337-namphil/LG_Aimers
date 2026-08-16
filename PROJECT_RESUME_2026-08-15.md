@@ -383,6 +383,81 @@ Verdict:
 - `TRACKMAN MECHANICAL DRIFT NOT USEFUL`
 - Next step: stop mechanical drift feature direction for now; move to target decomposition/model objective redesign.
 
+## Target Decomposition / Residual Modeling - 2026-08-16
+
+Script:
+- `validate_v3_target_decomposition.py`
+
+Output:
+- `output/v3_target_decomposition/`
+  - `target_definition_summary.csv`
+  - `target_distribution_by_year.csv`
+  - `fold_metrics.csv`
+  - `candidate_summary.csv`
+  - `year2023_analysis.csv`
+  - `deviation_bucket_analysis.csv`
+  - `prediction_correlation.csv`
+  - `error_decomposition.csv`
+  - `feature_importance.csv`
+  - `verdict.csv`
+
+Local-only:
+- `output/v3_target_decomposition/oof_predictions.csv`
+
+Evaluated target/objective definitions:
+- `A_ORIGINAL`: V2 binary `control_success`, CatBoostClassifier Logloss.
+- `B_SEASON_CENTERED`: `control_success - leave-one-out season baseline`, CatBoostRegressor RMSE.
+- `C_LOGIT_RESIDUAL`: `clip((y - q_loo)/(q_loo*(1-q_loo)), -4, 4)`, CatBoostRegressor RMSE.
+- `D_BASELINE_PLUS_MODEL_DEVIATION`: V2 classifier ranking with `future_baseline + raw_pred - mean(raw_cal)`.
+
+Baseline estimator:
+- Deterministic `linear_trend_recent3` with prior-history fallback only.
+
+V2 reproduction:
+- 2022 pseudo `89.5197`
+- 2023 pseudo `0`
+- 2024 pseudo `13.1818`
+- mean AUC `0.5194456`
+- 2023 skill margin `-0.0005680`
+
+Target distribution audit:
+- Season-centered and pseudo-logit residual targets reduced year-level target mean drift to near zero.
+- Removing target drift did not create materially better row-level ranking.
+
+Best discrimination:
+- `B_SEASON_CENTERED/native`
+  - mean AUC `0.519658`
+  - delta mean AUC vs V2 strength baseline `+0.000213`
+  - but 2024 pseudo `0`
+
+Best fixed-strength decomposition reference:
+- `B_SEASON_CENTERED/v2_strength`
+  - mean AUC `0.519528`
+  - delta mean AUC `+0.000082`
+  - 2022 pseudo `88.6942`
+  - 2023 pseudo `0`
+  - 2024 pseudo `18.7140`
+  - 2023 skill margin `-0.0005801`
+  - 2023 skill delta vs V2 `-0.0000121`
+
+2023 failure:
+- Best 2023 skill margin remained the original V2 strength baseline.
+- Decomposition did not improve 2023 ranking or calibration.
+
+Deviation buckets:
+- `B_SEASON_CENTERED/v2_strength` still lost skill in the 2024 `0.010-0.020` deviation bucket, indicating large-deviation overconfidence was not resolved.
+
+Prediction diversity:
+- `B_SEASON_CENTERED/v2_strength` vs V2:
+  - overall Pearson `0.995525`
+  - Spearman `0.995450`
+  - mean abs prediction diff `0.001145`
+  - squared-error correlation `0.996239`
+
+Verdict:
+- `TARGET DECOMPOSITION NOT USEFUL`
+- Next step: leave feature/target-decomposition space and evaluate a new modeling strategy such as ranking-aware or hierarchical formulation.
+
 ## Score-Positive Feature Experiment
 
 Script:

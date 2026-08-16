@@ -34,6 +34,7 @@ output/v3_ensemble/calibration_oof_predictions.csv
 output/v3_trackman_mechanical_drift_foundation/mechanical_drift_foundation_by_cutoff.csv
 output/v3_trackman_mechanical_drift_foundation/pitcher_season_pitch_type_summary.csv
 output/v3_trackman_drift_ablation/oof_predictions.csv
+output/v3_target_decomposition/oof_predictions.csv
 output/catboost_submission_check/clean_run/model/
 output/recent_form_smoke/
 output/recent_form_stage1/
