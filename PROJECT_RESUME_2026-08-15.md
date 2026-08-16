@@ -682,3 +682,68 @@ Conclusion:
 - 2023 pairwise accuracy moved only marginally while AUC and skill margin worsened.
 - Final verdict: `RANKING OBJECTIVE NOT USEFUL`.
 - Next step should move to a hierarchical formulation rather than another direct tabular objective variant.
+
+## V3 Hierarchical / Partial Pooling Experiment
+
+Script:
+- `validate_v3_hierarchical.py`
+
+Output:
+- `output/v3_hierarchical/`
+
+Setup:
+- V2 feature set unchanged.
+- No Trackman, no new raw features, no test prediction/distribution tuning.
+- Explicit empirical-Bayes hierarchy used prior-history target rates only:
+  - `global -> pitcher`
+  - `global -> pitcher -> count_state`
+  - `global -> pitcher -> game_type`
+  - `global -> pitcher -> batter_hand`
+  - logit multi-context pitcher/count/game offsets
+  - pitcher-count hierarchy + fixed `beta=0.5` CatBoost deviation reference
+- Fixed smoothing policy for main candidates:
+  - `alpha_pitcher=100`
+  - `alpha_context=300`
+- Calibration modes evaluated separately:
+  - native hierarchy probability
+  - Platt
+  - fixed V2 strength control
+
+V2 replay:
+- mean AUC: `0.519446`
+- 2022 pseudo: `89.520`
+- 2023 skill margin: `-0.000568`
+- 2024 pseudo: `13.182`
+
+Best fold-stable hierarchy:
+- `C_PITCHER_GAME` with fixed V2 strength control
+  - structure: `global -> pitcher -> game_type`
+  - mean AUC: `0.529827`
+  - delta mean AUC vs V2: `+0.010381`
+  - 2022 pseudo: `233.553`
+  - 2023 skill margin: `-0.000380`
+  - 2023 skill improvement vs V2: `+0.000188`
+  - 2024 pseudo: `50.045`
+  - bucket improvement rate vs V2: `0.750`
+  - V2 prediction correlation: `0.8637` overall
+
+Best 2023 hierarchy:
+- `D_PITCHER_BATTER_HAND` with fixed V2 strength control
+  - mean AUC: `0.528738`
+  - 2023 AUC: `0.526534`
+  - 2023 skill margin: `-0.000327`
+  - 2023 skill improvement vs V2: `+0.000241`
+  - 2024 pseudo: `94.459`
+
+Persistence diagnostics:
+- Pitcher effect next-year persistence is real but decays over years:
+  - `n>=100` Pearson: 2022 `0.453`, 2023 `0.298`, 2024 `0.125`
+- Context persistence:
+  - pitcher-game is strong in 2022 but weak by 2024.
+  - pitcher-batter-hand is more consistent than pitcher-game/count across 2023-2024.
+
+Conclusion:
+- Explicit partial pooling creates materially different and better OOF predictions than flat V2.
+- Success criteria are met by mean AUC, 2024 pseudo, 2023 skill recovery, and 3/3 skill-margin improvement for the best fixed-strength candidates.
+- Final verdict: `HIERARCHICAL SIGNAL FOUND`.
+- Next step should robustness-check the best hierarchy candidates as V3 submission candidates, especially `C_PITCHER_GAME` and `D_PITCHER_BATTER_HAND`, before creating any submission artifact.
