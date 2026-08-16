@@ -147,6 +147,66 @@ Verdict:
 - Do not create `submission-v3` from this ensemble result.
 - Next recommended direction: Trackman second-stage feature engineering.
 
+## Workspace Cleanup for Trackman V3 - 2026-08-16
+
+Goal:
+- Keep only V3 research essentials in the current working tree.
+- Preserve historical V1/V2/failed-experiment artifacts through Git history and tags.
+
+Preserved:
+- `data/`
+  - `train.csv`
+  - `test.csv`
+  - `sample_submission.csv`
+  - `trackman_history.csv`
+- `.git/`, `.gitignore`
+- `model/`
+- `catboost_submit_v2.zip`
+- V2/V3 core code:
+  - `model_utils.py`
+  - `calibration_utils.py`
+  - `catboost_v2_script.py`
+  - `train_catboost_submit_model.py`
+  - `validate_v3_catboost_tuning.py`
+  - `validate_v3_asof_signal_reconstruction.py`
+  - `validate_v3_ensemble.py`
+- Trackman code:
+  - `match_trackman_players.py`
+  - `build_trackman_features.py`
+  - `trackman_feature_utils.py`
+- Trackman derived reference outputs:
+  - `output/trackman_matching/`
+  - `output/trackman_features/`
+- V3 reference outputs:
+  - `output/v3_catboost_tuning/`
+  - `output/v3_asof_signal_reconstruction/`
+  - `output/v3_ensemble/`
+
+Deleted from current workspace:
+- staging/tmp directories
+- duplicate `catboost_model/`
+- old submission zips except `catboost_submit_v2.zip`
+- old V1/V2 diagnostic scripts no longer needed for active V3 work
+- old experiment output directories
+- large regenerated OOF files:
+  - `output/model_comparison/oof_predictions.csv`
+  - `output/v3_ensemble/oof_predictions.csv`
+  - `output/v3_ensemble/calibration_oof_predictions.csv`
+
+Review, kept intentionally:
+- `RECENT_FORM_RESUME.md`
+- `catboost_requirements.txt`
+
+Trackman raw:
+- `data/trackman_history.csv`
+- seasons `2019-2024`
+- rows are not modified.
+
+Tags preserved:
+- `submission-v1`
+- `submission-v1-hardened`
+- `submission-v2`
+
 ## Score-Positive Feature Experiment
 
 Script:
