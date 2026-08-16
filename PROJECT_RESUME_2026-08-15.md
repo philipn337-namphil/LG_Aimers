@@ -300,6 +300,89 @@ Verdict:
 - `MECHANICAL DRIFT FOUNDATION READY`
 - Next step: add only the most reliable strict prior-history drift family to V2 CatBoost in temporal ablation validation.
 
+## Trackman Mechanical Drift Ablation - 2026-08-16
+
+Script:
+- `validate_trackman_drift_ablation.py`
+
+Output:
+- `output/v3_trackman_drift_ablation/`
+  - `feature_family_metrics.csv`
+  - `fold_metrics.csv`
+  - `candidate_summary.csv`
+  - `matched_subset_analysis.csv`
+  - `matched_subset_delta.csv`
+  - `reliability_bucket_analysis.csv`
+  - `feature_importance.csv`
+  - `prediction_correlation.csv`
+  - `leakage_assertion_results.csv`
+  - `verdict.csv`
+
+Local-only:
+- `output/v3_trackman_drift_ablation/oof_predictions.csv`
+
+Validation setup:
+- V2 CatBoost params fixed.
+- V2 calibration pipeline fixed.
+- No hyperparameter tuning, no submission artifact, no `submission-v3` tag.
+- Trackman drift features merged by row cutoff year with strict prior-season source.
+
+Evaluated families:
+- `BASE`
+- `A_LEVEL`
+- `B_RECENT_DELTA`
+- `C_SLOPE`
+- `D_LEAGUE_RELATIVE`
+- `E_PITCHTYPE_ADJUSTED`
+- `F_RELIABILITY`
+- `G_RELEASE_CORE`
+- `H_MOVEMENT_CORE`
+- `I_RELEASE_PLUS_RELIABILITY`
+- `K_STABLE_TOP10`
+- `J_BEST_COMBINATION`
+
+Best overall:
+- `B_RECENT_DELTA`
+  - mean AUC `0.519981`
+  - delta mean AUC vs V2 `+0.000433`
+  - 2022 pseudo `93.7816`
+  - 2023 pseudo `0`
+  - 2024 pseudo `18.2048`
+  - 2023 skill margin `-0.0005738`
+  - 2023 skill delta vs V2 `-0.0000058`
+
+Matched subset:
+- `B_RECENT_DELTA` matched subset delta vs V2:
+  - 2022 AUC `-0.000484`, Brier worse by `+0.0000040`
+  - 2023 AUC `-0.000360`, Brier worse by `+0.0000034`
+  - 2024 AUC `+0.000651`, Brier better by `-0.0000104`
+- High-reliability subset also was not fold-consistent.
+
+Feature importance:
+- Trackman features had low importance.
+- Highest Trackman importances appeared below rank 70.
+- Notable features:
+  - `tm_rel_speed_pitch_type_adjusted_drift`
+  - `tm_horz_break_slope`
+  - `tm_extension_slope`
+  - `tm_induced_vert_break_recent2_minus_longterm`
+  - `tm_rel_speed_recent2_minus_longterm`
+
+Prediction diversity:
+- `B_RECENT_DELTA` vs V2 raw Pearson overall `0.991358`
+- final calibrated Pearson overall `0.996461`
+- squared-error correlation overall `0.997030`
+- mean absolute final prediction difference `0.001028`
+
+Leakage assertions:
+- 2022 max source season `2021`: PASS
+- 2023 max source season `2022`: PASS
+- 2024 max source season `2023`: PASS
+
+Verdict:
+- `TRACKMAN MECHANICAL DRIFT NOT USEFUL`
+- Next step: stop mechanical drift feature direction for now; move to target decomposition/model objective redesign.
+
 ## Score-Positive Feature Experiment
 
 Script:
