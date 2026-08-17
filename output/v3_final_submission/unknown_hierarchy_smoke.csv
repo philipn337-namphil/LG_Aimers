@@ -1,0 +1,6 @@
+case,prediction,pitcher_count,context_count,reliability,finite,in_range
+known_pitcher_known_game_type,0.5061116268732655,3085.0,2916.0,0.9686028257456829,True,True
+known_pitcher_unseen_game_type,0.5041717944508455,3085.0,0.0,0.9686028257456829,True,True
+unseen_pitcher,0.5,0.0,0.0,0.0,True,True
+missing_game_type,0.5041717944508455,3085.0,0.0,0.9686028257456829,True,True
+zero_history_count_edge,0.5,0.0,0.0,0.0,True,True

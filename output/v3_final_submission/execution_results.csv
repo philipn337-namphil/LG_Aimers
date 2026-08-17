@@ -1,0 +1,56 @@
+mode,representative,non_root,rows,columns,id_order_match,duplicate_id_count,nan_count,inf_count,outside_range_count,pred_mean,pred_std,pred_min,pred_max,q01,q05,q25,q50,q75,q95,q99,elapsed_seconds,peak_rss_mb,stdout_tail
+final_clean_room,False,False,5,row_id|control_success,True,0,0,0,0,0.4621786760555223,0.0006333385503839085,0.4614614464030755,0.4632768870564879,0.46147144452249755,0.4615114370001856,0.461711399388626,0.4620442963990546,0.4623993510303678,0.4631013798512639,0.4632417856154431,2.372037887573242,181.91015625,"script_path=C:\Users\phili\AppData\Local\Temp\tmp26qgzas1\app\script.py
+base_dir=C:\Users\phili\AppData\Local\Temp\tmp26qgzas1\app
+test_dir=C:\Users\phili\AppData\Local\Temp\tmp26qgzas1\data
+model_path=C:\Users\phili\AppData\Local\Temp\tmp26qgzas1\app\model\model.pkl exists=True
+hierarchy_path=C:\Users\phili\AppData\Local\Temp\tmp26qgzas1\app\model\hierarchy.pkl exists=True
+prediction_summary rows=5 mean=0.462178676055522 std=0.000633338550384 min=0.461461446403076 max=0.463276887056488 q01=0.461471444522498 q05=0.461511437000186 q50=0.462044296399055 q95=0.463101379851264 q99=0.463241785615443
+hierarchy_coverage known_pitcher_rate=0.400000 known_pitcher_game_rate=0.200000 mean_reliability=0.286769
+target_rate_2025=0.462178676055522
+runtime_seconds load=0.343 feature=0.053 model=0.004 hierarchy_calibration=0.005 write=0.003 total=0.411
+Saved: C:\Users\phili\AppData\Local\Temp\tmp26qgzas1\output\submission.csv rows=5 seconds=0.411
+"
+final_app_simulation,False,False,5,row_id|control_success,True,0,0,0,0,0.4621786760555223,0.0006333385503839085,0.4614614464030755,0.4632768870564879,0.46147144452249755,0.4615114370001856,0.461711399388626,0.4620442963990546,0.4623993510303678,0.4631013798512639,0.4632417856154431,2.3596315383911133,181.765625,"script_path=C:\Users\phili\AppData\Local\Temp\tmpqq6cbbo4\app\script.py
+base_dir=C:\Users\phili\AppData\Local\Temp\tmpqq6cbbo4\app
+test_dir=C:\Users\phili\AppData\Local\Temp\tmpqq6cbbo4\data
+model_path=C:\Users\phili\AppData\Local\Temp\tmpqq6cbbo4\app\model\model.pkl exists=True
+hierarchy_path=C:\Users\phili\AppData\Local\Temp\tmpqq6cbbo4\app\model\hierarchy.pkl exists=True
+prediction_summary rows=5 mean=0.462178676055522 std=0.000633338550384 min=0.461461446403076 max=0.463276887056488 q01=0.461471444522498 q05=0.461511437000186 q50=0.462044296399055 q95=0.463101379851264 q99=0.463241785615443
+hierarchy_coverage known_pitcher_rate=0.400000 known_pitcher_game_rate=0.200000 mean_reliability=0.286769
+target_rate_2025=0.462178676055522
+runtime_seconds load=0.347 feature=0.053 model=0.004 hierarchy_calibration=0.004 write=0.002 total=0.414
+Saved: C:\Users\phili\AppData\Local\Temp\tmpqq6cbbo4\output\submission.csv rows=5 seconds=0.414
+"
+final_non_root_cwd,False,True,5,row_id|control_success,True,0,0,0,0,0.4621786760555223,0.0006333385503839085,0.4614614464030755,0.4632768870564879,0.46147144452249755,0.4615114370001856,0.461711399388626,0.4620442963990546,0.4623993510303678,0.4631013798512639,0.4632417856154431,2.3720757961273193,181.91796875,"script_path=C:\Users\phili\AppData\Local\Temp\tmpjeucbyma\app\script.py
+base_dir=C:\Users\phili\AppData\Local\Temp\tmpjeucbyma\app
+test_dir=C:\Users\phili\AppData\Local\Temp\tmpjeucbyma\app\data
+model_path=C:\Users\phili\AppData\Local\Temp\tmpjeucbyma\app\model\model.pkl exists=True
+hierarchy_path=C:\Users\phili\AppData\Local\Temp\tmpjeucbyma\app\model\hierarchy.pkl exists=True
+prediction_summary rows=5 mean=0.462178676055522 std=0.000633338550384 min=0.461461446403076 max=0.463276887056488 q01=0.461471444522498 q05=0.461511437000186 q50=0.462044296399055 q95=0.463101379851264 q99=0.463241785615443
+hierarchy_coverage known_pitcher_rate=0.400000 known_pitcher_game_rate=0.200000 mean_reliability=0.286769
+target_rate_2025=0.462178676055522
+runtime_seconds load=0.316 feature=0.052 model=0.003 hierarchy_calibration=0.005 write=0.003 total=0.381
+Saved: C:\Users\phili\AppData\Local\Temp\tmpjeucbyma\app\output\submission.csv rows=5 seconds=0.381
+"
+final_representative_2024_input,True,False,253507,row_id|control_success,True,0,0,0,0,0.4621786031106565,0.005412089504778162,0.449098595326166,0.4821786760555224,0.45131126631988083,0.4532171987894444,0.45846196660104865,0.4617927693580406,0.465484338789888,0.4724976046900039,0.47519851620045567,7.813565731048584,727.79296875,"script_path=C:\Users\phili\AppData\Local\Temp\tmpi860ight\app\script.py
+base_dir=C:\Users\phili\AppData\Local\Temp\tmpi860ight\app
+test_dir=C:\Users\phili\AppData\Local\Temp\tmpi860ight\data
+model_path=C:\Users\phili\AppData\Local\Temp\tmpi860ight\app\model\model.pkl exists=True
+hierarchy_path=C:\Users\phili\AppData\Local\Temp\tmpi860ight\app\model\hierarchy.pkl exists=True
+prediction_summary rows=253507 mean=0.462178603110657 std=0.005412089504778 min=0.449098595326166 max=0.482178676055522 q01=0.451311266319881 q05=0.453217198789444 q50=0.461792769358041 q95=0.472497604690004 q99=0.475198516200456
+hierarchy_coverage known_pitcher_rate=1.000000 known_pitcher_game_rate=1.000000 mean_reliability=0.950048
+target_rate_2025=0.462178676055522
+runtime_seconds load=1.075 feature=2.986 model=0.095 hierarchy_calibration=0.991 write=0.453 total=5.793
+Saved: C:\Users\phili\AppData\Local\Temp\tmpi860ight\output\submission.csv rows=253507 seconds=5.793
+"
+final_test_sanity,False,False,5,row_id|control_success,True,0,0,0,0,0.4621786760555223,0.0006333385503839085,0.4614614464030755,0.4632768870564879,0.46147144452249755,0.4615114370001856,0.461711399388626,0.4620442963990546,0.4623993510303678,0.4631013798512639,0.4632417856154431,2.3720316886901855,181.5859375,"script_path=C:\Users\phili\AppData\Local\Temp\tmp9u63uvnz\app\script.py
+base_dir=C:\Users\phili\AppData\Local\Temp\tmp9u63uvnz\app
+test_dir=C:\Users\phili\AppData\Local\Temp\tmp9u63uvnz\data
+model_path=C:\Users\phili\AppData\Local\Temp\tmp9u63uvnz\app\model\model.pkl exists=True
+hierarchy_path=C:\Users\phili\AppData\Local\Temp\tmp9u63uvnz\app\model\hierarchy.pkl exists=True
+prediction_summary rows=5 mean=0.462178676055522 std=0.000633338550384 min=0.461461446403076 max=0.463276887056488 q01=0.461471444522498 q05=0.461511437000186 q50=0.462044296399055 q95=0.463101379851264 q99=0.463241785615443
+hierarchy_coverage known_pitcher_rate=0.400000 known_pitcher_game_rate=0.200000 mean_reliability=0.286769
+target_rate_2025=0.462178676055522
+runtime_seconds load=0.334 feature=0.052 model=0.004 hierarchy_calibration=0.004 write=0.002 total=0.400
+Saved: C:\Users\phili\AppData\Local\Temp\tmp9u63uvnz\output\submission.csv rows=5 seconds=0.400
+"

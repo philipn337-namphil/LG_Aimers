@@ -1,0 +1,2 @@
+history_min_season,history_max_season,history_rows,prediction_year,uses_2019_2024_labeled_train_only,forbidden_phrase_found,result
+2019,2024,1475092,2025,True,False,LEAKAGE CHECK PASS

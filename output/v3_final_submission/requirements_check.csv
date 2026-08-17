@@ -1,0 +1,6 @@
+requirement,import_module,import_success,reason
+pandas==2.3.2,pandas,True,CSV loading and feature table operations
+numpy==2.3.2,numpy,True,probability transforms and vectorized blending
+scikit-learn==1.7.1,sklearn,True,stored Platt calibrator and FeatureBuilder dependencies
+joblib==1.5.1,joblib,True,model and hierarchy artifact loading
+catboost==1.2.10,catboost,True,stored V2 CatBoost model inference

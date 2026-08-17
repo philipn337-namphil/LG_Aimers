@@ -880,3 +880,63 @@ Artifact checks:
 Conclusion:
 - Final verdict: `V3 DRY-RUN ARTIFACT READY`.
 - Next step should be final V3 artifact creation with `submission-v3` tag and DACON pre-submit verification, without changing model formulation.
+
+## V3 Final Submission Artifact
+
+Final file:
+- `catboost_submit_v3.zip`
+
+Candidate:
+- `C_PITCHER_GAME_probblend100`
+
+Frozen formulation:
+- V2 CatBoost raw probability
+- V2 Platt
+- hierarchy lookup: `global -> pitcher -> pitcher x game_type`
+- probability-space reliability blend:
+  - reliability = `pitcher_history_count / (pitcher_history_count + 100)`
+  - native = `reliability * hierarchy_prob + (1 - reliability) * V2_Platt`
+- hierarchy Platt
+- fixed V2 strength control:
+  - logit mean matching
+  - `T=2.3`
+  - logit mean realignment
+  - hard cap `+/-0.020`
+
+Parameters:
+- `alpha_pitcher=100`
+- `alpha_context=300`
+- `reliability_k=100`
+- 2025 target rate: `0.462178676055522`
+
+Artifact identity:
+- ZIP SHA256: `8fc03542e788476835169857fde0c2e9c08f7a0d17326441e044706447b4b459`
+- ZIP size: `304,770` bytes
+- `model/model.pkl` SHA256: `3048dc5d2ab0756bac0408c52e3e0a2c0bdb1c1a3faaf4b940004b971753960d`
+- `model/hierarchy.pkl` SHA256: `b93af95d3ec0315748406febbbaf236759753608164601c9b7afbeb52fc015aa`
+
+Final validation:
+- dry-run vs final member hashes: all identical.
+- dry-run vs final predictions: max abs diff `0.0`.
+- validation implementation max abs diff: `0.0` for 2022/2023/2024.
+- replay:
+  - 2022 AUC `0.553344`, pseudo `243.672`
+  - 2023 AUC `0.521419`, skill `-0.000398`, pseudo `0`
+  - 2024 AUC `0.519476`, pseudo `52.823`
+  - mean AUC `0.531413`
+- clean-room execution passed.
+- `/app`-style simulation passed.
+- non-root CWD execution passed.
+- representative 2024-size input:
+  - rows `253,507`
+  - script internal runtime `5.793s`
+  - harness elapsed `7.814s`
+  - peak RSS about `727.79 MB`
+- schema/ID/order/NaN/inf/range checks passed.
+- unknown hierarchy smoke tests passed.
+- leakage audit passed:
+  - hierarchy source is labeled train seasons `2019-2024` only.
+
+Conclusion:
+- Final verdict: `READY TO UPLOAD DACON V3`.
+- `submission-v3` tag should point at the commit containing `catboost_submit_v3.zip`.
