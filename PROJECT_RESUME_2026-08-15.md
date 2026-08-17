@@ -805,3 +805,78 @@ Conclusion:
 - Hierarchical signal is reproducible across smoothing, low-sample fallback, reliability blending, and bootstrap.
 - Final verdict: `READY FOR V3 ARTIFACT`.
 - Next step should create the V3 artifact from the conservative soft-blend hierarchy only after one final artifact-build dry run; do not add new feature families before that.
+
+## V3 Hierarchical Artifact Dry-Run
+
+Scripts:
+- `hierarchical_utils.py`
+- `build_v3_hierarchical_artifact.py`
+- `catboost_v3_hierarchical_script.py`
+- `dryrun_v3_hierarchical_artifact.py`
+
+Output:
+- `output/v3_artifact_dryrun/`
+
+Dry-run artifact:
+- local file only, not committed: `catboost_submit_v3_dryrun.zip`
+- no `submission-v3` tag created.
+
+Candidate:
+- `C_PITCHER_GAME_probblend100`
+
+Exact source-of-truth implementation:
+- Build pure hierarchy from prior-history target rows:
+  - `global -> pitcher -> pitcher x game_type`
+  - `alpha_pitcher=100`
+  - `alpha_context=300`
+- For validation/test rows:
+  - compute V2 Platt probability.
+  - compute hierarchy probability.
+  - reliability = `pitcher_history_count / (pitcher_history_count + 100)`.
+  - native Candidate A probability = `reliability * hierarchy_probability + (1 - reliability) * V2_Platt`.
+- Important calibration detail:
+  - calibration-year Platt is fit on pure hierarchy calibration score, matching `validate_v3_hierarchical_robustness.py`.
+  - validation/test rows then use the blended native score before Platt application.
+- Final strength control:
+  - Platt
+  - `linear_trend_recent3`
+  - logit mean matching
+  - temperature `T=2.3`
+  - logit mean realignment
+  - symmetric hard cap `+/-0.020`
+
+2025 artifact history:
+- hierarchy tables use labeled train seasons `2019-2024` only.
+- target rate 2025 = `0.462178676055522`.
+- pitcher rows: `792`.
+- pitcher-game rows: `1245`.
+- hierarchy artifact size: `55,584` bytes.
+- zip size: `304,770` bytes.
+
+Equivalence / replay:
+- validation implementation max abs diff:
+  - 2022: `0.0`
+  - 2023: `0.0`
+  - 2024: `0.0`
+- replay:
+  - 2022 AUC `0.553344`, pseudo `243.672`
+  - 2023 AUC `0.521419`, skill `-0.000398`
+  - 2024 AUC `0.519476`, pseudo `52.823`
+  - mean AUC `0.531413`
+
+Artifact checks:
+- clean-room execution passed.
+- non-root CWD execution passed.
+- unknown/unseen fallback smoke tests passed.
+- zip `testzip()` passed.
+- no Windows absolute path or secret tokens found in source files.
+- tiny 5-row test sanity:
+  - prediction mean `0.462178676055522`
+  - std `0.000633338550384`
+  - min `0.461461446403076`
+  - max `0.463276887056488`
+- measured peak RSS on 5-row dry-run: about `181.86 MB`.
+
+Conclusion:
+- Final verdict: `V3 DRY-RUN ARTIFACT READY`.
+- Next step should be final V3 artifact creation with `submission-v3` tag and DACON pre-submit verification, without changing model formulation.

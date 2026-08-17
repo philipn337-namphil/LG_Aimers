@@ -52,10 +52,12 @@ output/trackman_matching/
 catboost_hardened_staging_tmp/
 catboost_daconfix_staging_tmp/
 catboost_v2_staging_tmp/
+catboost_v3_staging_tmp/
 v1_daconfix_compare_tmp/
 v2_clean_room_tmp/
 v2_nonroot_cwd_tmp/
 catboost_submit_daconfix.zip
+catboost_submit_v3_dryrun.zip
 
 # Duplicate intermediate score-positive experiment outputs
 output/score_positive_features_baseline_fi/

@@ -1,0 +1,4 @@
+valid_year,calibration_rows,validation_rows,calibration_max_abs_diff,validation_max_abs_diff
+2022,247088,247472,0.0,0.0
+2023,247472,245525,0.0,0.0
+2024,245525,253507,0.0,0.0

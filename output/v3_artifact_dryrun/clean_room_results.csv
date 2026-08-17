@@ -1,0 +1,23 @@
+non_root,elapsed_seconds,stdout_tail,rows,columns,pred_mean,pred_std,pred_min,pred_max,nan_count
+False,3.876694679260254,"script_path=C:\Users\phili\AppData\Local\Temp\tmp106prkvq\app\script.py
+base_dir=C:\Users\phili\AppData\Local\Temp\tmp106prkvq\app
+test_dir=C:\Users\phili\AppData\Local\Temp\tmp106prkvq\data
+model_path=C:\Users\phili\AppData\Local\Temp\tmp106prkvq\app\model\model.pkl exists=True
+hierarchy_path=C:\Users\phili\AppData\Local\Temp\tmp106prkvq\app\model\hierarchy.pkl exists=True
+prediction_summary rows=5 mean=0.462178676055522 std=0.000633338550384 min=0.461461446403076 max=0.463276887056488 q01=0.461471444522498 q05=0.461511437000186 q50=0.462044296399055 q95=0.463101379851264 q99=0.463241785615443
+hierarchy_coverage known_pitcher_rate=0.400000 known_pitcher_game_rate=0.200000 mean_reliability=0.286769
+target_rate_2025=0.462178676055522
+runtime_seconds load=0.606 feature=0.106 model=0.009 hierarchy_calibration=0.011 write=0.006 total=0.741
+Saved: C:\Users\phili\AppData\Local\Temp\tmp106prkvq\output\submission.csv rows=5 seconds=0.741
+",5,row_id|control_success,0.4621786760555223,0.0006333385503839085,0.4614614464030755,0.4632768870564879,0
+True,2.4307315349578857,"script_path=C:\Users\phili\AppData\Local\Temp\tmp43e8tz9o\app\script.py
+base_dir=C:\Users\phili\AppData\Local\Temp\tmp43e8tz9o\app
+test_dir=C:\Users\phili\AppData\Local\Temp\tmp43e8tz9o\app\data
+model_path=C:\Users\phili\AppData\Local\Temp\tmp43e8tz9o\app\model\model.pkl exists=True
+hierarchy_path=C:\Users\phili\AppData\Local\Temp\tmp43e8tz9o\app\model\hierarchy.pkl exists=True
+prediction_summary rows=5 mean=0.462178676055522 std=0.000633338550384 min=0.461461446403076 max=0.463276887056488 q01=0.461471444522498 q05=0.461511437000186 q50=0.462044296399055 q95=0.463101379851264 q99=0.463241785615443
+hierarchy_coverage known_pitcher_rate=0.400000 known_pitcher_game_rate=0.200000 mean_reliability=0.286769
+target_rate_2025=0.462178676055522
+runtime_seconds load=0.338 feature=0.054 model=0.005 hierarchy_calibration=0.005 write=0.002 total=0.407
+Saved: C:\Users\phili\AppData\Local\Temp\tmp43e8tz9o\app\output\submission.csv rows=5 seconds=0.407
+",5,row_id|control_success,0.4621786760555223,0.0006333385503839085,0.4614614464030755,0.4632768870564879,0
